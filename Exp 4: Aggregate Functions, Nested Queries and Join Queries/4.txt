@@ -1,0 +1,98 @@
+create table emp5 (EmpId Varchar2(20) Primary Key,EmpName Varchar2(20),Job Varchar2(20),Manager Varchar2(20),DeptNo Varchar2(20),Comm Number(5),HireDate Date,Sal  number(10,3));
+insert into emp5 values('E0001', 'Abey', 'Tester', 'E0004', 'D004' , 500,'15/dec/12', 30000);
+insert into emp5 values('E0002','Jesto','Analyst','E0001','D002',650 ,'24/apr/11',25000);
+insert into emp5 values('E0003','Adarsh','Clerk','E0004','D004',500,'10/jan/13', 15000);
+insert into emp5 values('E0004','Kevin','Admin','E0005','D002',1750,'10/oct/13' ,20000);  
+insert into emp5 values('E0005','Bony','Manager',NULL,'D001',1000,'11/apr/11', 50000);
+insert into emp5 values('E0006','Manu','Supplier','E0001','D003',450 ,'19/jun/13',5000);
+
+create table Clients(Cno varchar2(6) PRIMARY KEY,Name varchar2(20),City varchar2(15),PinCode number(8),State varchar2(15),Baldue number(10,2));
+insert into Clients values(001,'Riya','Kochi',680324,'Kerala',14000);
+insert into Clients values(002,'Susan','Kochi',680324,'Kerala',600);
+insert into Clients values(003,'Anitha','Chennai',680345,'TamilNadu',5000);
+insert into Clients values(004,'Kumar','Pune',680223,'Maharashtra',500);
+insert into Clients values(005,'Anu','Nilampur',680321,'Kerala',7600);
+insert into Clients values(006,'Vishnu','Bombay',682111,'Maharashtra',2055);
+
+UPDATE Clients set Baldue=600 where Name='Susan';
+1_a)
+1_Aadarsh
+SELECT SUM(BALDUE) FROM Clients;
+
+1_b)
+1_Aadarsh
+SELECT COUNT(*) FROM emp5;
+
+1_c)
+1_Aadarsh
+SELECT MIN(BALDUE) FROM Clients;
+SELECT Max(BALDUE) FROM Clients;
+
+1_d)
+1_Aadarsh
+SELECT AVG(SAL)FROM emp5;
+
+1_e)
+1_Aadarsh
+SELECT EmpName FROM emp5 order by EmpName asc;
+
+1_f)
+1_Aadarsh
+SELECT DeptNo,MAX(SAL) FROM emp5 GROUP BY DeptNo;
+
+1_g)
+1_Aadarsh
+SELECT DeptNo,MIN(SAL) FROM emp5 WHERE DeptNo<>'D001' GROUP BY DeptNo;
+
+...........................................................................................................................................................................................
+
+create table Department(DeptNo Varchar2(20) PRIMARY KEY,DeptName varchar2(20),Location varchar2(20));
+insert into Department values('D001','DIT','A Block');
+insert into Department values('D002','DCS','B Block');
+insert into Department values('D003','DEC','C Block');
+insert into Department values('D004','DEE','D Block');
+
+2_a)
+1_Aadarsh
+SELECT Department.DeptNo FROM Department FULL OUTER JOIN emp5 ON Department.DeptNo=emp5.DeptNo;
+select deptno from emp5 union select deptno from Department;
+
+2_b)
+1_Aadarsh
+SELECT Department.DeptNo FROM Department RIGHT OUTER JOIN emp5 ON Department.DeptNo=emp5.DeptNo;
+select deptno from emp5 minus select deptno from Department;
+
+2_c)
+1_Aadarsh
+SELECT * FROM emp5 WHERE Sal >(SELECT Sal FROM emp5 WHERE EmpName='Adarsh');
+
+2_d)
+1_Aadarsh
+SELECT * FROM emp5 WHERE Sal <(SELECT min(Sal) FROM emp5 WHERE DeptNo='D004');
+
+2_e)
+1_Aadarsh
+SELECT EmpName,Sal FROM emp5 WHERE Sal>(SELECT min(Sal) FROM emp5) AND JOB LIKE 'A%';
+
+2_f)
+1_Aadarsh
+select * from emp5 join Department on emp5.deptno=Department.deptno;
+ 
+2_g)
+1_Aadarsh
+select * from emp5 join Department on emp5.deptno!=Department.deptno;
+
+2_h)
+1_Aadarsh
+select EmpName,Job,Manager from emp5 left join Department on emp5.deptno=Department.deptno;
+
+2_i)
+1_Aadarsh
+select EmpName,Job,Manager from emp5 right join Department on emp5.deptno=Department.deptno;
+ 
+2_j)
+1_Aadarsh
+select EmpName,Job,Manager from emp5 full outer join Department on emp5.deptno=Department.deptno;
+
+............................
+
