@@ -1,0 +1,62 @@
+#Experiment 3.1
+A)
+create table employee2(EmpId Varchar2(20) Primary Key,EmpName Varchar2(20),Job Varchar2(20),Manager Varchar2(20),DeptNo Varchar2(20),Comm Number(5),HireDate Date,Sal  number(10,3));
+insert into emp values('E0001', 'Abey', 'Tester', 'E0004', 'D004' , 500,'15/dec/12', 30000);
+insert into emp values('E0002','Jesto','Analyst','E0001','D002',650 ,'24/apr/11',25000);
+insert into emp values('E0003','Adarsh','Clerk','E0004','D004',500,'10/jan/13', 15000);
+insert into emp values('E0004','Kevin','Admin','E0005','D002',1750,'10/oct/13' ,20000);  
+insert into emp values('E0005','Bony','Manager',NULL,'D001',1000,'11/apr/11', 50000);
+insert into emp values('E0006','Manu','Supplier','E0001','D003',450 ,'19/jun/13',5000);
+
+create view CUST_VW as select EmpId,EmpName,Job,Manager from employee2;
+select * from CUST_VW;
+B)
+1_Aadarsh
+ update cust_vw set job= 'Senior Clerk' where job='Clerk';
+select * from CUST_VW;
+ 
+C)
+1_Aadarsh
+delete from CUST_VW where EmpName='Kevin';
+select * from CUST_VW;
+ 
+D)
+1_Aadarsh
+drop view CUST_VW;
+
+
+E_A)
+1_Aadarsh
+select POWER (16,5 )  from dual;
+
+E_B)
+1_Aadarsh
+select LENGTH('application') from dual;
+
+E_C)
+1_Aadarsh
+select LAST_DAY (sysdate)from dual;
+
+E_D)
+1_Aadarsh
+select TO_CHAR ( 65432,'$99999' ) from dual;
+
+E_E)
+1_Aadarsh
+select SYSTIMESTAMP from dual;
+
+E_F)
+1_Aadarsh
+SELECT EXTRACT(YEAR FROM HireDate) as Year_of_Hiring from employee2;
+
+E_G)
+1_Aadarsh
+Select trunc(months_between (sysdate,HireDate),0) from employee2;
+
+E_H)
+1_Aadarsh
+select count(DISTINCT DeptNo) from employee2;
+
+E_I)
+1_Aadarsh
+SELECT TO_CHAR(HireDate,'DAY,DD MONTH,YYYY') from employee2;
