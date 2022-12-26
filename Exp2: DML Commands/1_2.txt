@@ -1,0 +1,139 @@
+Exercise 1_Aadarsh
+1.
+create table Students(ID number NOT NULL,Name varchar(20),Email varchar(30),Phoneno number(10),DOB date,Address varchar(40),Height_in_cm float,DeptNo number(10) NOT NULL);
+
+desc Students;
+
+
+create table Dept(DeptNo number(5) PRIMARY KEY,DeptName varchar2(20),Location varchar2(20));
+
+desc Dept;
+
+2.
+alter table Students ADD date_of_joining date;
+
+3.
+alter table Students ADD Stipend number NOT NULL;
+
+4.
+alter table Students add CHECK(Stipend>0);
+
+5.
+alter table Students modify Id PRIMARY KEY;
+
+6.
+alter table Dept add UNIQUE(DeptName);
+
+7.
+alter table Students modify DeptNo references Dept;
+alter table Students add foreign key(DeptNo) references Dept(DeptNo);
+
+8.
+alter table Students drop COLUMN date_of_joining;
+alter table Students drop COLUMN Address;
+
+9.
+alter table Dept MODIFY DeptName varchar(10);
+
+10.
+alter table Dept drop UNIQUE(DeptName);
+
+11.
+alter table Students RENAME COLUMN Name to SName;
+
+12.
+drop table Dept;
+
+13.
+SELECT 'Aadarsh20' AS NAME FROM DUAL;
+
+14.
+SELECT sysdate FROM DUAL ;
+
+15.
+SELECT 15+10-5*2/5 FROM DUAL;
+
+16.
+SELECT table_name
+FROM user_tables
+ORDER BY table_name ASC;
+
+Exercise 2
+1.
+create table Students(ID number NOT NULL,Name varchar(20),Email varchar(30),Phoneno number(10),DOB date,Address varchar(40),Height_in_cm float,DeptNo number(10) NOT NULL);
+create table Dept(DeptNo number(10) PRIMARY KEY,DeptName varchar2(20),Location varchar2(20));
+alter table Students modify Id PRIMARY KEY;
+alter table Students modify DeptNo references Dept;
+
+insert into Students values(0001,'Abey','U2007002@rajagiri.edu.in',9645765552,'15/DEC/2001','RSET-AID',160,004);
+insert into Students values(0002,'Jesto','U2007068@rajagiri.edu.in',9446907495,'24/APR/2001','RSET-IT',165,002);
+insert into Students values(0003,'Adarsh','U2007003@rajagiri.edu.in',9446168018,'10/JAN/2003','RSET-AID',180,004);
+insert into Students values(0004,'Kevin','U2007004@rajagiri.edu.in',9048779636,'10/OCT/2002','RSET-IT',175,002);
+insert into Students values(0005,'Bony','U2007005@rajagiri.edu.in',8848647102,'11/APR/2001','RSET-CSE',168,001);
+insert into Students values(0006,'Manu','U2007006@rajagiri.edu.in',9447026251,'19/JUN/2003','RSET-CSBS',192,002);
+
+2.
+insert into Dept values(001,'DIT','A Block');
+insert into Dept values(002,'DCS','B Block');
+insert into Dept values(003,'DEC','C Block');
+insert into Dept values(004,'DEE','D Block');
+
+3.
+create table Client(Cno varchar2(6) PRIMARY KEY,Name varchar2(20),City varchar2(15),PinCode number(8),State varchar2(15),Baldue number(10,2));
+
+4.
+insert into Client values(001,'Riya','Kochi',680324,'Kerala',14000);
+insert into Client values(002,'Susan','Kochi',680324,'Kerala',0);
+insert into Client values(003,'Anitha','Chennai',680345,'TamilNadu',5000);
+insert into Client values(004,'Kumar','Pune',680223,'Maharashtra',500);
+insert into Client values(005,'Anu','Nilampur',680321,'Kerala',7600);
+insert into Client values(006,'Vishnu','Bombay',682111,'Maharashtra',2055);
+
+5.
+select * from Students;
+select * from Dept;
+select * from Client;
+
+6.
+insert into Students values(0007,'Laila','U2007009@rajagiri.edu.in',9567992310,'21/DEC/2002','RSET-CSBS',168,002);
+
+7.
+select * from Client where rownum<=4;
+
+8.
+select Name,Email,Phoneno from Students;
+
+9.
+select * from Students where Name like 'A%' or Name like 'K%';
+
+10.
+select DISTINCT city from Client;
+
+11.
+select * from Students where Name>='E' and Name<'L';
+
+12.
+UPDATE Client set City='Delhi' where Cno='3';
+
+13.
+UPDATE Client set Baldue=600 where Name='Susan';
+
+14.
+select * from Students where DeptNo=2 or DeptNo=4;
+
+15.
+alter table Client RENAME COLUMN Due_Balance to Baldue ;
+select Baldue as Due_Balance from Client;
+
+16.
+select * from Client where State<>'Kerala';
+
+17.
+select * from Students,Dept where Students.DeptNo=Dept.DeptNo and DeptName='DEE';
+ALTER TABLE Students ADD FOREIGN KEY(DeptNo) references Dept(DeptNo);
+
+18.
+SELECT * FROM Dept WHERE DeptNo NOT IN (select DeptNo FROM Students);
+
+19.
+select Name,DeptNo from Students where DOB BETWEEN '20/FEB/2001' and '01/JUL/2003' ORDER BY DOB asc;
