@@ -1,0 +1,226 @@
+1.
+1_Aadarsh
+
+declare
+    basic number;
+    da number;
+    hra number;
+    pf number;
+    gross_sal number;
+begin
+    dbms_output.put_line('enter basic:');
+    basic:='&basic';
+    da:=basic*(40/100);
+    hra:=basic*(20/100);
+    pf:=basic*(12/100);
+    gross_sal:=basic+hra+da-pf;
+ 
+dbms_output.put_line('provided fund is '||pf);
+dbms_output.put_line('gross salary is '||gross_sal);
+end;
+/
+
+2.
+1_Aadarsh
+
+declare
+num int :=0;
+i int;
+s int :=0;
+r int;
+
+begin
+num:=&num;
+while num > 0 loop
+r:= MOD(num, 10);
+s := s + r;
+num:=floor(num/10);
+end loop;
+
+dbms_output.put_line('  the sum of digits is '||s );
+
+end;
+/
+ 
+3.
+1_Aadarsh
+
+declare
+sal number;
+
+begin
+sal:=&sal;
+if sal<3000 then
+sal:=4000;
+end if;
+dbms_output.put_line(' salary is '||sal );
+end;
+
+/
+
+4. 
+1_Aadarsh
+
+declare
+num number;
+d number;
+r number;
+n number;
+
+begin
+num:=&num;
+n:=num;
+d:=0;
+while num > 0 loop
+r:= MOD(num, 10);
+d := d + power(r,3);
+num:=floor(num/10);
+end loop;
+
+if (n=d) then
+dbms_output.put_line(' it is Armstrong number'  );
+else
+dbms_output.put_line(' it is not Armstrong number');
+
+end if;
+end;
+
+/
+
+ 5.
+1_Aadarsh
+
+declare
+num number;
+d number;
+
+
+begin
+num:=&num;
+d:=1;
+while num > 1 loop
+d:=d*num;
+num:=num-1;
+end loop;
+
+dbms_output.put_line(' fact=' ||d);
+
+end;
+
+/
+
+
+6.
+1_Aadarsh
+
+declare
+    str1 varchar2(50):='&str';
+    str2 varchar2(50);
+    len number;
+    i number;
+ 
+begin
+len:=length(str1);
+for i in reverse 1..len
+loop
+str2:=str2 || substr(str1,i,1);
+end loop;
+dbms_output.put_line('Reverse of String is:'||str2);
+end;
+
+/
+
+ 7.
+1_Aadarsh
+
+DECLARE
+   n number;
+   m number;
+   temp number:=0;
+   rem number;
+BEGIN
+   n :=&n;
+   m :=n;
+   while n>0
+   loop
+      rem := mod(n,10);
+      temp := (temp*10)+rem;
+      n := trunc(n/10);
+   end loop;
+   if m = temp
+   then
+      dbms_output.put_line('Palindrome');
+   else
+      dbms_output.put_line('Not Palindrome');
+   end if;
+end;
+
+/
+
+
+ 8.
+1_Aadarsh
+
+create table EvenNo ( even number);
+
+DECLARE
+   i number;
+   m number;
+BEGIN
+   for i in  10..50
+loop
+
+if mod(i,2)=0 then
+insert into EvenNo values(i);
+end if;
+end loop;
+end;
+
+/
+select * from evenno;
+ 
+9.
+1_Aadarsh
+
+create table stud1 (
+roll number,name varchar(15),m1 number,m2 number,m3 number,tot_marks number);
+
+insert into stud1 values(1,'Mathew',10,20,30,60);
+insert into stud1 values(2,'Ram,',20,20,50,90);
+insert into stud1 values(3,'Joe',20,20,30,70);
+insert into stud1 values(4,'Kevin',15,25,35,75);
+
+create table gradea (roll number,name varchar(15));
+create table gradeb (roll number,name varchar(15));
+create table gradec (roll number,name varchar(15));
+
+1_Aadarsh
+
+DECLARE
+   n number;
+   nam varchar(15);
+   i number;
+   
+BEGIN
+for i in  1..4
+loop
+   select tot_marks,name into n,nam from stud1 where roll=i ;
+   if n>75 then
+      insert into gradea values(n,nam);
+ELSIF n>60 then
+      insert into gradeb values(n,nam);
+else
+      insert into gradec values(n,nam);
+   end if;
+   end loop;
+end;
+/
+1_Aadarsh
+
+ select * from gradea;
+  select * from gradeb;
+   select * from gradec;
+ 
+truncate table gradea;
+truncate table gradeb;
+truncate table gradec;
