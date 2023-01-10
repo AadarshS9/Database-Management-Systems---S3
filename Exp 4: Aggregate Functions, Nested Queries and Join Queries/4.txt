@@ -34,7 +34,7 @@ SELECT AVG(SAL)FROM emp5;
 
 1_e)
 1_Aadarsh
-SELECT EmpName FROM emp5 order by EmpName asc;
+SELECT Name FROM Clients order by Name asc;
 
 1_f)
 1_Aadarsh
