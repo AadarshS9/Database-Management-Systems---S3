@@ -1,0 +1,150 @@
+#experiment 8
+8.1
+1_Aadarsh
+create table employee3(EmpId number Primary Key,EName Varchar2(20),Salary number(10,3),Dept Varchar2(20),EDate Date);
+insert into employee3 values(1, 'Abey',30000,'D004' ,'15/dec/12');
+insert into employee3 values(2,'Jesto',25000,'D002','24/apr/11');
+insert into employee3 values(3,'Adarsh',15000,'D004','10/jan/13');
+insert into employee3 values(4,'Kevin',20000,'D002','10/oct/13');  
+insert into employee3 values(5,'Bony', 50000,'D001','11/apr/11');
+insert into employee3 values(6,'Manu',5000,'D003','19/jun/13');
+
+select * from employee3;
+
+CREATE OR REPLACE PROCEDURE P1(eid IN number,salinc IN number) AS
+ BEGIN
+	UPDATE employee3 SET salary=salary+salinc WHERE empid=eid;
+END;
+/
+
+begin
+P1(2,200);
+end;
+/
+select * from employee3;
+
+8.2
+1_Aadarsh
+create table employee4(EmpId Varchar2(20) Primary Key,EmpName Varchar2(20),Job Varchar2(20),Manager Varchar2(20),DeptNo Varchar2(20),HireDate Date,Sal  number(10,3),Comm Number(5));
+insert into employee4 values('E0001', 'Abey', 'Tester', 'E0004', 'D004' ,'15/dec/12', 30000,500);
+insert into employee4 values('E0002','Jesto','Analyst','E0001','D002','24/apr/11',25000,650);
+insert into employee4 values('E0003','Adarsh','Clerk','E0004','D004','10/jan/13', 15000,500);
+insert into employee4 values('E0004','Kevin','Admin','E0005','D002','10/oct/13' ,20000,1750);  
+insert into employee4 values('E0005','Bony','Manager',NULL,'D001','11/apr/11', 50000,1000);
+insert into employee4 values('E0006','Manu','Supplier','E0001','D003','19/jun/13',50000,450);
+select * from employee4;
+
+CREATE OR REPLACE PROCEDURE P2(eid IN Varchar2) AS
+ BEGIN
+	UPDATE employee4 SET comm=comm+(comm*0.05)  WHERE EmpId=eid;
+END;
+/
+
+begin
+P2('E0002');
+end;
+/
+select * from employee4;
+
+8.3
+1_Aadarsh
+create table bank(accno number,balance number);
+insert into bank values(105,1400);
+insert into bank values(106,2000);
+insert into bank values(107,4000);
+insert into bank values(108,1000);
+ select * from bank;
+
+CREATE OR REPLACE PROCEDURE P3(wamt IN number, id IN number)
+IS
+balamt number;
+bal number;
+BEGIN
+select balance into balamt from bank where id=accno;
+bal:=balamt-wamt;
+if(bal<1000) then
+dbms_output.put_line('LOW BALANCE!!');
+else
+update bank set balance=bal where accno=id;
+dbms_output.put_line('Money withdrawn! Balance: '|| bal);
+end if;
+END;
+/
+
+BEGIN
+P3(400,105);
+END;
+/
+ select * from bank;
+
+
+8.4
+1_Aadarsh
+CREATE OR REPLACE PROCEDURE P4(num1 IN NUMBER, num2 IN NUMBER) AS
+	gcd number;
+	lcm number;
+	tn1 number;
+	tn2 number;
+begin
+    	tn1:=num1;
+    	tn2:=num2; 
+	gcd:=num1; 	
+	WHILE MOD(tn2, tn1) != 0
+	LOOP 
+	gcd:=tn2;
+	tn2:=MOD(tn1, tn2);  
+   	tn1:= gcd;  
+    	END LOOP;  
+	lcm:=(num1*num2)/gcd;
+
+dbms_output.put_line('GCD is ' ||num1);  
+dbms_output.put_line('LCM is ' ||lcm); 
+end;
+/
+
+BEGIN
+P4(num1=>10,num2=>15);
+END;
+/
+
+
+8.5
+1_Aadarsh
+create table student5(RegNo number,Name varchar2(20),Marks number);
+insert into student5 values(1,'Abey',99);
+insert into student5 values(2,'Jesto',80);
+insert into student5 values(3,'Adarsh',69);
+insert into student5 values(4,'Kevin',75);
+insert into student5 values(5,'Bony',90);
+insert into student5 values(6,'Manu',85);
+
+select * from student5;
+
+CREATE OR REPLACE PROCEDURE P51 AS
+	avgmarks number;
+begin
+	SELECT AVG(Marks) AS Marks INTO avgmarks FROM student5;
+ 
+dbms_output.put_line('Average of Marks is ' ||avgmarks);  
+END;
+/
+
+BEGIN
+	P51;
+END;
+/
+................................................
+1_Aadarsh
+CREATE OR REPLACE PROCEDURE P52(rno IN NUMBER) AS
+	mn number;
+begin
+	SELECT Marks AS mn INTO mn FROM student5 WHERE RegNo=rno;
+ 
+dbms_output.put_line('Roll No '|| rno|| ' Mark is ' ||mn);  
+END;
+/
+
+BEGIN
+P52(1);
+END;
+/
