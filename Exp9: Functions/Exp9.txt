@@ -1,0 +1,66 @@
+#Experiment9
+
+9.1
+1_Aadarsh
+create table employee9(EmpId Varchar2(20) Primary Key,EmpName Varchar2(20),Job Varchar2(20),Manager Varchar2(20),DeptNo Varchar2(20),HireDate Date,Sal  number(10,3),Comm Number(5));
+insert into employee9 values('E0001', 'Abey', 'Tester', 'E0004', 'D004' ,'15/dec/12', 30000,500);
+insert into employee9 values('E0002','Jesto','Analyst','E0001','D002','24/apr/11',25000,650);
+insert into employee9 values('E0003','Adarsh','Clerk','E0004','D004','10/jan/13', 15000,500);
+insert into employee9 values('E0004','Kevin','Admin','E0005','D002','10/oct/13' ,20000,1750);  
+insert into employee9 values('E0005','Bony','Manager',NULL,'D001','11/apr/11', 50000,1000);
+insert into employee9 values('E0006','Manu','Supplier','E0001','D003','19/jun/13',50000,450);
+select * from employee9;
+
+CREATE OR REPLACE FUNCTION F1(Eid varchar2) RETURN VARCHAR2 AS Mname VARCHAR2(255);
+BEGIN
+  SELECT EmpName INTO Mname FROM employee9 WHERE EmpId = (SELECT Manager FROM employee9 WHERE EmpId = Eid);
+  RETURN Mname;
+END;
+/
+
+SELECT F1('E0003') FROM DUAL;
+
+
+9.2_1
+1_Aadarsh
+CREATE TABLE Product (product_id INTEGER PRIMARY KEY,product_name VARCHAR2(255),grade INTEGER);
+INSERT INTO Product VALUES (1, 'wrench', 3);
+INSERT INTO Product VALUES (2, 'tea', 3);
+INSERT INTO Product VALUES (3, 'coffee', 1);
+
+CREATE TABLE Sales (product_id INTEGER,sales NUMBER,sales_date DATE,sales_day VARCHAR2(10),FOREIGN KEY (product_id) REFERENCES Product(product_id));
+INSERT INTO Sales VALUES (1, 100, SYSDATE, 'MONDAY');
+INSERT INTO Sales VALUES (2, 750, SYSDATE, 'TUESDAY');
+INSERT INTO Sales VALUES (3, 240, SYSDATE, 'MONDAY');
+
+CREATE OR REPLACE FUNCTION F21(pid INTEGER) RETURN VARCHAR2 AS pname VARCHAR2(255);
+  pgrade INTEGER;
+BEGIN
+  SELECT product_name, grade INTO pname, pgrade FROM Product WHERE product_id = pid;
+  RETURN pname || ' - Grade ' || pgrade;
+END;
+
+SELECT F21(1) FROM DUAL;
+
+9.2_2
+1_Aadarsh
+create or replace function F22 (target number, s number) return VARCHAR2 IS grade VARCHAR2(2);
+begin
+  IF s>target THEN
+     grade:= 'A';
+  ELSE
+     grade:= 'B';
+  END IF;
+return grade;
+end;
+/
+
+declare
+   total INTEGER;
+begin
+   select sum(sales) into total from sales;
+   DBMS_OUTPUT.PUT_LINE('Grade: ' || F22(100,total));
+end;
+/
+
+select F22(100,sum(sales)) from sales;
