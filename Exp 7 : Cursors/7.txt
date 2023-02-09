@@ -1,0 +1,140 @@
+Experiment 7
+#7.1
+1_Aadarsh
+create table employee7(EmpId Varchar2(20) Primary Key,EmpName Varchar2(20),Job Varchar2(20),Manager Varchar2(20),DeptNo Varchar2(20),HireDate Date,Sal  number(10,3),Comm Number(5));
+insert into employee7 values('E0001', 'Abey', 'Tester', 'E0004', 'D004' ,'15/dec/12', 30000,500);
+insert into employee7 values('E0002','Jesto','Analyst','E0001','D002','24/apr/11',25000,650);
+insert into employee7 values('E0003','Adarsh','Clerk','E0004','D004','10/jan/13', 15000,500);
+insert into employee7 values('E0004','Kevin','Admin','E0005','D002','10/oct/13' ,20000,1750);  
+insert into employee7 values('E0005','Bony','Manager',NULL,'D001','11/apr/11', 50000,1000);
+insert into employee7 values('E0006','Manu','Supplier','E0001','D003','19/jun/13',50000,450);
+
+1_Aadarsh
+DECLARE
+	CURSOR c_emp IS
+	SELECT *	FROM employee7;
+	vr_emp c_emp%ROWTYPE;
+BEGIN
+	OPEN c_emp;
+	LOOP
+		FETCH c_emp INTO vr_emp;
+		EXIT WHEN c_emp%NOTFOUND;
+		DBMS_OUTPUT.PUT_LINE('Employee ID:'||vr_emp.EmpId||'   Employee Name:'||vr_emp.EmpName||'     Employee Job:'||vr_emp.Job||'     Employee Salary:'||vr_emp.Sal);
+	END LOOP;
+	close c_emp;
+END;
+/
+
+#7.2
+1_Aadarsh
+create table person(Personid Number, Firstname varchar2(20),Lastname varchar2(20));
+insert into person values(1,'Abey','Yeba');
+insert into person values(25,'Jesto','Otsej');
+insert into person values(50,'Adarsh','Hsrada');
+insert into person values(69,'Kevin','Nivek');
+insert into person values(81,'Bony','Ynob');
+insert into person values(101,'Manu','Unam');
+select * from person;
+
+1_Aadarsh
+DECLARE
+	CURSOR c_person IS
+	SELECT Personid,FirstName,Lastname FROM person WHERE personid > 50;
+	vr_person c_person%ROWTYPE;
+BEGIN
+	OPEN c_person;	
+	LOOP
+		FETCH c_person INTO vr_person;
+		EXIT WHEN c_person%NOTFOUND;
+		DBMS_OUTPUT.PUT_LINE('Person ID:'||vr_person.Personid||'   First Name:'||vr_person.Firstname||'     Last Name:'||vr_person.Lastname);
+	END LOOP;
+END;
+/
+..................
+1_Aadarsh
+DECLARE
+ 	CURSOR c_person IS
+	 SELECT Personid,FirstName,Lastname FROM person WHERE personid > 50;
+BEGIN
+	 FOR vr_person IN c_person
+	 LOOP
+		 DBMS_OUTPUT.PUT_LINE('Person ID:'||vr_person.Personid||'   First Name:'||vr_person.Firstname||'     Last Name:'||vr_person.Lastname);
+	 END LOOP;
+END;
+/
+
+#7.3
+1_Aadarsh
+select * from employee7;
+1_Aadarsh
+DECLARE
+	CURSOR c_empd(salcheck IN employee7.Sal%TYPE) IS
+	SELECT EmpName,Sal FROM employee7 WHERE Sal<salcheck ;
+	vr_empd c_empd%ROWTYPE;
+BEGIN
+	OPEN c_empd(30000);
+	LOOP
+		FETCH c_empd INTO vr_empd;
+		EXIT WHEN c_empd%NOTFOUND;
+		DBMS_OUTPUT.PUT_LINE('Employee Name:'||vr_empd.EmpName||'     Employee Salary:'||vr_empd.Sal);
+	END LOOP;
+	close c_empd;
+END;
+/
+
+
+#7.4
+1_Aadarsh
+create table accmaster(Accno Number(20) PRIMARY KEY, Name varchar2(20),Balance number(20));
+insert into accmaster values(111222333,'Abey',25000);
+insert into accmaster values(444555666,'Jesto',50000);
+insert into accmaster values(777888999,'Adarsh',60000);
+
+create table acctran(Accno Number(20) references accmaster(Accno), Transactiondate Date, Deb_Cred varchar2(20),Amount number(20),Processed varchar2(20));
+insert into acctran values(111222333,'17/jan/23','Debit',5000,'No');
+insert into acctran values(444555666,'17/jan/23','Credit',10000,'No');
+insert into acctran values(777888999,'17/jan/23','Debit',5000,'Yes');
+
+1_Aadarsh
+select * from accmaster;
+select * from acctran;
+
+1_Aadarsh
+DECLARE
+	CURSOR c_master IS
+	SELECT * FROM accmaster FOR UPDATE OF Balance;
+	vr_master c_master%ROWTYPE;
+
+	CURSOR c_tran IS
+	SELECT * FROM acctran FOR UPDATE OF Processed;
+	vr_tran c_tran%ROWTYPE;
+BEGIN
+	OPEN c_master;
+	OPEN c_tran;
+	
+	LOOP
+		FETCH c_master INTO vr_master;
+		EXIT WHEN c_master%NOTFOUND;
+
+		FETCH c_tran INTO vr_tran;
+		EXIT WHEN c_tran%NOTFOUND;
+
+	if vr_tran.Deb_Cred='Debit'  and vr_tran.Processed='No' THEN
+		vr_master.Balance:=vr_master.Balance+vr_tran.Amount;
+		UPDATE acctran SET Processed='Yes';
+		UPDATE accmaster SET Balance=vr_master.Balance;
+	elsif vr_tran.Deb_Cred='Credit'   and vr_tran.Processed='No' THEN	
+		vr_master.Balance:=vr_master.Balance-vr_tran.Amount;
+		UPDATE acctran SET Processed='Yes';		
+		UPDATE accmaster SET Balance=vr_master.Balance;
+		
+	END IF;
+		DBMS_OUTPUT.PUT_LINE('Person ID:'||vr_master.Accno||'   First Name:'||vr_master.Name||'     Balance:'||vr_master.Balance);
+	END LOOP;
+	close c_master;
+	close c_tran;
+END;
+/
+select * from acctran;
+
+
