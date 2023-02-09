@@ -1,0 +1,33 @@
+#EXPERIMENT 5
+5.1A AND 5.1B
+1_Aadarsh
+create table Client2(Cno varchar2(6) PRIMARY KEY,Name varchar2(20),City varchar2(15),PinCode number(8),State varchar2(15),Due_Balance number(10,2));
+insert into Client2 values(001,'Riya','Kochi',680324,'Kerala',14000);
+insert into Client2 values(002,'Susan','Kochi',680324,'Kerala',0);
+insert into Client2 values(003,'Anitha','Chennai',680345,'TamilNadu',5000);
+insert into Client2 values(004,'Kumar','Pune',680223,'Maharashtra',500);
+insert into Client2 values(005,'Anu','Nilampur',680321,'Kerala',7600);
+insert into Client2 values(006,'Vishnu','Bombay',682111,'Maharashtra',2055);
+select * from client2;
+savepoint a;
+delete from client2 where Due_Balance<=0;
+select * from client2;
+rollback to a;
+select * from client2;
+
+
+5.2A
+1_Aadarsh
+GRANT ALL ON CLIENT TO u2109002;
+
+5.2B
+1_Aadarsh
+GRANT SELECT ON CLIENT TO u2109002;
+
+5.2C
+1_Aadarsh
+REVOKE ALL ON CLIENT FROM u2109002;
+
+5.2D
+1_Aadarsh
+REVOKE SELECT ON CLIENT FROM u2109002;
